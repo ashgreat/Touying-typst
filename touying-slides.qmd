@@ -1,0 +1,88 @@
+---
+title: "Touying Slides in Quarto"
+subtitle: "Typst-powered presentations"
+author:
+  - name: "Quarto Typst Team"
+format:
+  typst:
+    template: _extensions/touying-slides/template.typ
+    template-partials:
+      - _extensions/touying-slides/typst-show.typ
+      - _extensions/touying-slides/page.typ
+      - _extensions/touying-slides/biblio.typ
+    theme: metropolis
+    aspect-ratio: "16-9"
+    handout: false
+---
+
+# Getting Started
+
+## Welcome
+
+### Why Touying?
+
+Touying brings sophisticated slide tooling to Typst. Now that it is wired into
+Quarto, you can stay in Markdown while reaching for Typst blocks when you need
+fine-grained control.
+
+### Agenda
+
+- Tour Touying themes from your document metadata.
+- Combine Typst’s `#slide` function with `#pause` for gradual reveals.
+- Drop in **Fletcher** diagrams for animated visuals.
+
+## Live Examples
+
+### Incremental Slide Content
+
+```{=typst}
+#slide[
+  #text(1.4em, weight: "bold")[Hello, Touying!]
+  #v(1em)
+  We can reveal ideas step-by-step.
+
+  #pause
+  • Create slides from Markdown headings.
+
+  #pause
+  • Style everything through Touying themes.
+
+  #pause
+  #alert[Even complex layouts fit inside `#slide` blocks.]
+]
+```
+
+### Fletcher Diagram Animation
+
+```{=typst}
+#slide[
+  #text(1.2em, weight: "bold")[Animated Process]
+  #v(1em)
+  #fletcher-diagram(
+    spacing: 3.5em,
+    node((0, 0), [Ideate], radius: 2em),
+    pause,
+    edge("r", "-|>", [Share]),
+    node((1, 0), [Prototype], radius: 2em),
+    pause,
+    edge("r", "-|>", [Reflect]),
+    node((2, 0), [Review], radius: 2em),
+    pause,
+    edge((2, 0), (0, 0), "-|>", bend: 35deg, label: [Iterate]),
+  )
+]
+```
+
+## Going Further
+
+### More Typst Helpers
+
+- `#meanwhile` for parallel narration.
+- `#speaker-note[...]` for presenter notes captured in the PDF metadata.
+- Touying reducers let you animate any Typst content by wrapping it with
+  `touying-reducer.with(...)`.
+
+### Resources
+
+Check out the Touying documentation at <https://touying-typ.github.io/docs/intro>
+for the full API, and the Fletcher manual for diagram recipes.
