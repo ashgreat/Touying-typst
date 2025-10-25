@@ -151,7 +151,7 @@ Touying themes expose additional knobs beyond the generic options above. A few c
   ```
 
 Refer to the official theme docs for a deeper catalogue of per-theme options:
-<https://touying-typ.github.io/docs/themes/>.
+<https://touying-typ.github.io/docs/category/themes>.
 
 ## Acknowledgements
 
