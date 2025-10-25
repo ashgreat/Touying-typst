@@ -87,8 +87,8 @@ colors, and layout. To build your own:
 
 ### Font and Typography Overrides
 
-For quicker tweaks without writing a full theme, you can override typography directly from the document
-metadata. The extension recognizes the following optional keys under `format.typst`:
+For quicker tweaks without writing a full theme, you can override typography *and* navigation defaults
+directly from YAML. The extension recognizes these optional keys under `format.typst`:
 
 ```yaml
 format:
@@ -98,20 +98,28 @@ format:
       - _extensions/touying-slides/typst-show.typ
       - _extensions/touying-slides/page.typ
       - _extensions/touying-slides/biblio.typ
-    theme: metropolis
+    theme: dewdrop
     base-font: "Inter"
     heading-font: "Roboto Slab"
     code-font: "Fira Code"
     font-size: 24pt
+    navigation: "mini-slides"         # or "sidebar" (theme default)
+    sidebar-width: 6em                # only used when navigation is "sidebar"
+    sidebar-filled: true
+    sidebar-short-headings: false
+    mini-slides-section: true         # only used when navigation is "mini-slides"
+    mini-slides-subsection: true
+    mini-slides-short-headings: false
 ```
 
-- `base-font` sets the main text family.
-- `heading-font` adjusts heading typography.
-- `code-font` is applied to raw/code blocks.
-- `font-size` controls the default text size (value should include a Typst unit such as `24pt`).
+- `base-font`, `heading-font`, `code-font`, `font-size` update the typographic foundations. Specify font
+  names available on your system and include units for the size.
+- `navigation` flips Touying between its sidebar and mini-slide navigation layouts (useful for Dewdrop).
+- `sidebar-*` keys tweak the sidebar width and appearance.
+- `mini-slides-*` keys control how much context appears in the top navigation strip.
 
-These overrides run in the Touying preamble, so they layer on top of the selected theme while preserving
-its other behaviors.
+All of these run inside the Touying preamble, so they layer cleanly on top of the selected theme while
+preserving theme-specific styling.
 
 ### Theme-Specific Tips
 
@@ -127,19 +135,8 @@ Touying themes expose additional knobs beyond the generic options above. A few c
   )
   ```
 
-- **Dewdrop navigation** – the default is a left-hand sidebar. Switch to the top "mini-slides" navigation
-  bar or shrink the sidebar width by extending the theme options:
-
-  ```{=typst}
-  #show: touying-config.with(
-    config-store(
-      navigation: "mini-slides",
-      mini-slides: (display-section: true, short-heading: false),
-    ),
-  )
-  ```
-
-  For a thinner sidebar keep `navigation: "sidebar"` and set `sidebar: (width: 6em, filled: true)`.
+- **Dewdrop navigation** – the default is a left-hand sidebar. Use the YAML keys to pick `navigation:
+  "mini-slides"` (for the frosted top bar) or adjust the sidebar width/filling directly.
 
 - **Aqua gradients** – the signature background shapes appear on the title, outline, and section slides.
   Drop in the dedicated helpers to showcase them:

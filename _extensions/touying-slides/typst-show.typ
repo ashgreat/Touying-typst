@@ -37,6 +37,93 @@ $else$
 #let touying-handout = false
 $endif$
 
+$if(base-font)$
+#let touying-base-font = ("$base-font$")
+$else$
+#let touying-base-font = none
+$endif$
+
+$if(heading-font)$
+#let touying-heading-font = ("$heading-font$")
+$else$
+#let touying-heading-font = none
+$endif$
+
+$if(code-font)$
+#let touying-code-font = ("$code-font$")
+$else$
+#let touying-code-font = none
+$endif$
+
+$if(font-size)$
+#let touying-font-size = $font-size$
+$else$
+#let touying-font-size = none
+$endif$
+
+$if(navigation)$
+#let touying-navigation = "$navigation$"
+$else$
+#let touying-navigation = none
+$endif$
+
+$if(sidebar-width)$
+#let touying-sidebar-width = $sidebar-width$
+$else$
+#let touying-sidebar-width = none
+$endif$
+
+$if(sidebar-filled)$
+#let touying-sidebar-filled = $sidebar-filled$
+$else$
+#let touying-sidebar-filled = none
+$endif$
+
+$if(sidebar-short-headings)$
+#let touying-sidebar-short = $sidebar-short-headings$
+$else$
+#let touying-sidebar-short = none
+$endif$
+
+$if(mini-slides-section)$
+#let touying-mini-section = $mini-slides-section$
+$else$
+#let touying-mini-section = none
+$endif$
+
+$if(mini-slides-subsection)$
+#let touying-mini-subsection = $mini-slides-subsection$
+$else$
+#let touying-mini-subsection = none
+$endif$
+
+$if(mini-slides-short-headings)$
+#let touying-mini-short = $mini-slides-short-headings$
+$else$
+#let touying-mini-short = none
+$endif$
+
+#let touying-sidebar = utils.merge-dicts(
+  (:),
+  if touying-sidebar-width != none { (width: touying-sidebar-width) } else { (:) },
+  if touying-sidebar-filled != none { (filled: touying-sidebar-filled) } else { (:) },
+  if touying-sidebar-short != none { (short-heading: touying-sidebar-short) } else { (:) },
+)
+
+#let touying-mini = utils.merge-dicts(
+  (:),
+  if touying-mini-section != none { (display-section: touying-mini-section) } else { (:) },
+  if touying-mini-subsection != none { (display-subsection: touying-mini-subsection) } else { (:) },
+  if touying-mini-short != none { (short-heading: touying-mini-short) } else { (:) },
+)
+
+#let touying-store = utils.merge-dicts(
+  (:),
+  if touying-navigation != none { (navigation: touying-navigation) } else { (:) },
+  if touying-sidebar.len() > 0 { (sidebar: touying-sidebar) } else { (:) },
+  if touying-mini.len() > 0 { (mini-slides: touying-mini) } else { (:) },
+)
+
 #let touying-theme = touying-themes.at(touying-theme-key, default: simple-theme)
 
 #let fletcher-diagram = touying-reducer.with(reduce: diagram, cover: hide)
@@ -66,34 +153,13 @@ $if(logo)$
 $endif$
 )
 
-$if(base-font)$
-#let touying-base-font = ("$base-font$")
-$else$
-#let touying-base-font = none
-$endif$
-
-$if(heading-font)$
-#let touying-heading-font = ("$heading-font$")
-$else$
-#let touying-heading-font = none
-$endif$
-
-$if(code-font)$
-#let touying-code-font = ("$code-font$")
-$else$
-#let touying-code-font = none
-$endif$
-
-$if(font-size)$
-#let touying-font-size = $font-size$
-$else$
-#let touying-font-size = none
-$endif$
-
 #let touying-config-base = touying-theme.with(
   aspect-ratio: touying-aspect,
   config-common(handout: touying-handout),
   touying-info,
+  if touying-navigation != none { config-store(navigation: touying-navigation) } else { (:) },
+  if touying-sidebar.len() > 0 { config-store(sidebar: touying-sidebar) } else { (:) },
+  if touying-mini.len() > 0 { config-store(mini-slides: touying-mini) } else { (:) },
 )
 
 #let touying-config = if (
