@@ -113,6 +113,49 @@ format:
 These overrides run in the Touying preamble, so they layer on top of the selected theme while preserving
 its other behaviors.
 
+### Theme-Specific Tips
+
+Touying themes expose additional knobs beyond the generic options above. A few common customisations:
+
+- **Stargazer spacing** – level-3 headings (`###`) sit directly under the gradient title bar. Add a short
+  spacer at the top of each slide (for example `#v(1em)` after the heading) or override the subslide
+  preamble:
+
+  ```{=typst}
+  #show: touying-config.with(
+    config-common(subslide-preamble: self => [ #v(1em) ])
+  )
+  ```
+
+- **Dewdrop navigation** – the default is a left-hand sidebar. Switch to the top "mini-slides" navigation
+  bar or shrink the sidebar width by extending the theme options:
+
+  ```{=typst}
+  #show: touying-config.with(
+    config-store(
+      navigation: "mini-slides",
+      mini-slides: (display-section: true, short-heading: false),
+    ),
+  )
+  ```
+
+  For a thinner sidebar keep `navigation: "sidebar"` and set `sidebar: (width: 6em, filled: true)`.
+
+- **Aqua gradients** – the signature background shapes appear on the title, outline, and section slides.
+  Drop in the dedicated helpers to showcase them:
+
+  ```{=typst}
+  #title-slide
+
+  #outline-slide
+
+  = Section
+  == Slide with content
+  ```
+
+Refer to the official theme docs for a deeper catalogue of per-theme options:
+<https://touying-typ.github.io/docs/themes/>.
+
 ## Acknowledgements
 
 - [Touying](https://github.com/touying-typ/touying) (MIT License) — Slide engine and themes.
