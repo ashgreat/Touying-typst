@@ -66,10 +66,64 @@ $if(logo)$
 $endif$
 )
 
-#let touying-config = touying-theme.with(
+$if(base-font)$
+#let touying-base-font = ("$base-font$")
+$else$
+#let touying-base-font = none
+$endif$
+
+$if(heading-font)$
+#let touying-heading-font = ("$heading-font$")
+$else$
+#let touying-heading-font = none
+$endif$
+
+$if(code-font)$
+#let touying-code-font = ("$code-font$")
+$else$
+#let touying-code-font = none
+$endif$
+
+$if(font-size)$
+#let touying-font-size = $font-size$
+$else$
+#let touying-font-size = none
+$endif$
+
+#let touying-config-base = touying-theme.with(
   aspect-ratio: touying-aspect,
   config-common(handout: touying-handout),
   touying-info,
 )
+
+#let touying-config = if (
+  touying-base-font != none or
+  touying-heading-font != none or
+  touying-code-font != none or
+  touying-font-size != none
+) {
+  touying-config-base.with(
+    config-common(
+      preamble: self => {
+        self.default-preamble(self)
+        if touying-base-font != none and touying-font-size != none {
+          set text(font: touying-base-font, size: touying-font-size)
+        } else if touying-base-font != none {
+          set text(font: touying-base-font)
+        } else if touying-font-size != none {
+          set text(size: touying-font-size)
+        }
+        if touying-heading-font != none {
+          set heading(font: touying-heading-font)
+        }
+        if touying-code-font != none {
+          show raw: set text(font: touying-code-font)
+        }
+      },
+    ),
+  )
+} else {
+  touying-config-base
+}
 
 #show: touying-config

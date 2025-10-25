@@ -85,6 +85,34 @@ colors, and layout. To build your own:
 4. Iterate on typography, headers, footers, and subslide behavior by combining the helper functions
    documented at <https://touying-typ.github.io/docs/themes/>.
 
+### Font and Typography Overrides
+
+For quicker tweaks without writing a full theme, you can override typography directly from the document
+metadata. The extension recognizes the following optional keys under `format.typst`:
+
+```yaml
+format:
+  typst:
+    template: _extensions/touying-slides/template.typ
+    template-partials:
+      - _extensions/touying-slides/typst-show.typ
+      - _extensions/touying-slides/page.typ
+      - _extensions/touying-slides/biblio.typ
+    theme: metropolis
+    base-font: "Inter"
+    heading-font: "Roboto Slab"
+    code-font: "Fira Code"
+    font-size: 24pt
+```
+
+- `base-font` sets the main text family.
+- `heading-font` adjusts heading typography.
+- `code-font` is applied to raw/code blocks.
+- `font-size` controls the default text size (value should include a Typst unit such as `24pt`).
+
+These overrides run in the Touying preamble, so they layer on top of the selected theme while preserving
+its other behaviors.
+
 ## Acknowledgements
 
 - [Touying](https://github.com/touying-typ/touying) (MIT License) — Slide engine and themes.
